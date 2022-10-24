@@ -1,0 +1,36 @@
+---
+import type { ITodoItem } from '../../../../app.types';
+import Layout from '@layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const listRes = await fetch(import.meta.env.API_URL);
+  const list = await listRes.json();
+
+  return list.map((todo: ITodoItem) => {
+    return {
+      params: { id: todo.id },
+      props: { data: todo },
+    };
+  });
+}
+
+const { id } = Astro.params;
+const { data } = Astro.props;
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <h1 class="font-bold text-3xl py-2">{data?.title}</h1>
+    <div>
+      <span>Todo detail</span>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 60ch;
+  }
+</style>

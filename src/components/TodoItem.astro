@@ -1,0 +1,22 @@
+---
+import type { ITodoItem } from '../../app.types';
+
+export interface Props {
+  data: ITodoItem;
+}
+
+const { data } = Astro.props;
+---
+
+<section
+  class="flex flex-row items-start justify-start w-full border-b border-dashed border-gray-300"
+>
+  <a
+    class="text-xl font-light text-slate-700 py-2 w-full transition-all hover:text-slate-800 hover:bg-green-50"
+    href={`/todo/detail/${data.id}`}
+  >
+    <h3>
+      {data.title}
+    </h3>
+  </a>
+</section>

@@ -1,0 +1,48 @@
+---
+import type { ITodoItem } from '../../../../app.types';
+import TodoItem from '@components/TodoItem.astro';
+import Layout from '@layouts/Layout.astro';
+
+export async function getStaticPaths({ paginate }: any) {
+  const r = await fetch(import.meta.env.API_URL);
+  const res = await r.json();
+  const data = (res ? res : []) as ITodoItem[];
+
+  return paginate(data, { pageSize: 10 });
+}
+
+const { page } = Astro.props;
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <h1 class="font-bold text-3xl py-2">Todo List - {page.currentPage}</h1>
+    <article>
+      {page.data.map((t: ITodoItem) => <TodoItem data={t} />)}
+    </article>
+    <footer class="mt-2 w-full p-4 text-center">
+      {
+        page.url.prev ? (
+          <a class="text-slate-500 text-lg mx-1" href={page.url.prev}>
+            上一页
+          </a>
+        ) : null
+      }
+      {
+        page.url.next ? (
+          <a class="text-slate-500 text-lg mx-1" href={page.url.next}>
+            下一页
+          </a>
+        ) : null
+      }
+    </footer>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 60ch;
+  }
+</style>

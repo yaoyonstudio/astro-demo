@@ -1,0 +1,26 @@
+---
+import Layout from '@layouts/Layout.astro';
+
+import IconBoy from '@assets/boy.svg?url';
+import IconGirl from '@assets/girl.svg?url';
+---
+
+<Layout title="Welcome to Astro.">
+  <main>
+    <h1 class="font-bold text-3xl py-2">Home</h1>
+    <div>
+      <div class="flex flex-row border">
+        <img class="w-12 m-2 block" src={IconBoy} alt="boy" />
+        <img class="w-12 m-2 block" src={IconGirl} alt="girl" />
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  main {
+    margin: auto;
+    padding: 1.5rem;
+    max-width: 60ch;
+  }
+</style>
